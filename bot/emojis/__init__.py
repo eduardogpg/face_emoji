@@ -1,0 +1,1 @@
+from manage import generate_new_image_emoji

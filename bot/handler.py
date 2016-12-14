@@ -3,26 +3,19 @@
 import requests
 import json
 
-from manage import generate_new_image_emoji
+from emojis import generate_new_image_emoji
 
 def received_message(event, token):
     sender_id = event['sender']['id']
-    recipient_id = event['recipient']['id']
-    time_message = event['timestamp'] 
     message = event['message']
-
-
-    print message
 
     handler_message(message, sender_id, token)
 
 
 def handler_message(message, user_id ,token):
 	attachments = message.get('attachments', [] )
+	send_typing_message(user_id, token) #Typing
 	
-	typing = typing_message(user_id)
-	call_send_API(typing, token)
-
 	if attachments:
 		attachment = attachments[0]
 		if attachment['type'] == 'image':
@@ -30,21 +23,25 @@ def handler_message(message, user_id ,token):
 			data = text_message(user_id, "Espere, por lo regular esto tarda un por de segundos!")
 			call_send_API(data, token)
 
-			typing = typing_message(user_id)
-			call_send_API(typing, token)
+			send_typing_message(user_id, token) #Typing
 
 			payload = attachment['payload']
-			url = generate_new_image_emoji(payload['url'])
+			print payload['url']
+			#url = generate_new_image_emoji(payload['url'])
 			
-			typing = typing_message(user_id)
-			call_send_API(typing, token)
+			send_typing_message(user_id, token) #Typing
 
-			data = image_message(user_id, url)
-			call_send_API(data, token)
+			#data = image_message(user_id, url)
+			#call_send_API(data, token)
 
 	else:
 		data = text_message(user_id, "Lo siento intenta enviandome una imagen")
 		call_send_API(data, token)
+
+
+def send_typing_message(user_id, token):
+	typing = typing_message(user_id)
+	call_send_API(typing, token)
 
 
 def call_send_API(data, token):
