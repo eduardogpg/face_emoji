@@ -4,19 +4,20 @@ import datetime
 
 def upload_file(path):
 	from imgurpython import ImgurClient
+	import os
+	
 	client_id = '494404a834dcabb'
 	client_secret = 'be3622ab397d1122acb0bdbd589e2c26f40be726'
 
 	client = ImgurClient(client_id, client_secret)
 	response = client.upload_from_path(path)
+	os.system("rm " + path)
 	return response['link']
 
 def get_all_emojis(path):
 	import os
 	path = "{}/emojis/".format(path)
 	return [ path + f for f in os.listdir(path) if f.endswith(".png") ]
-
-	'emojis/images//news/2016-12-14 11:46:56.001682.jpg/emojis/'
 
 
 def create_image(url, path):
@@ -37,7 +38,7 @@ def add_emoji_face(path, emojis, faces):
 
 	background = Image.open(path)
 	foreground = Image.open(random.choice(emojis))
-
+	
 	for face in faces:
 		foreground_copy = foreground.resize( (face['width'], face['height']) )
 		background.paste(foreground_copy, (face['left'], face['top']), foreground_copy)
@@ -60,6 +61,7 @@ def get_face(url):
 		for face in face_list:
 			faces.append(face['faceRectangle'])
 	return faces			
+
 
 
 def generate_new_image_emoji(url, global_path = 'images'):

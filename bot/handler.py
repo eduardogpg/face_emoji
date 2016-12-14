@@ -20,7 +20,7 @@ def handler_message(message, user_id ,token):
 		attachment = attachments[0]
 		if attachment['type'] == 'image':
 
-			data = text_message(user_id, "Espere, por lo regular esto tarda un por de segundos!")
+			data = text_message(user_id, "Espere, por lo regular esto tarda un par de segundos! 😅 ")
 			call_send_API(data, token)
 
 			send_typing_message(user_id, token) #Typing
@@ -29,13 +29,16 @@ def handler_message(message, user_id ,token):
 			print payload['url']
 			url = generate_new_image_emoji(payload['url'], global_path = 'emojis/images/')
 			
+			data = text_message(user_id, "Ya tenemos tu imagen! 🤓 ")
+			call_send_API(data, token)
+
 			send_typing_message(user_id, token) #Typing
 
 			data = image_message(user_id, url)
 			call_send_API(data, token)
 
 	else:
-		data = text_message(user_id, "Lo siento intenta enviandome una imagen")
+		data = text_message(user_id, "Lo siento intenta enviandome una imagen! 😊")
 		call_send_API(data, token)
 
 
