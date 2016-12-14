@@ -27,12 +27,12 @@ def handler_message(message, user_id ,token):
 
 			payload = attachment['payload']
 			print payload['url']
-			#url = generate_new_image_emoji(payload['url'])
+			url = generate_new_image_emoji(payload['url'], global_path = 'emojis/images/')
 			
 			send_typing_message(user_id, token) #Typing
 
-			#data = image_message(user_id, url)
-			#call_send_API(data, token)
+			data = image_message(user_id, url)
+			call_send_API(data, token)
 
 	else:
 		data = text_message(user_id, "Lo siento intenta enviandome una imagen")
